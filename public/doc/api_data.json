@@ -79,7 +79,7 @@
     "groupTitle": "facebook",
     "sampleRequest": [
       {
-        "url": "http://likulator.loc/api/v1/facebook/deleteUser"
+        "url": "http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com/api/v1/facebook/deleteUser"
       }
     ]
   },
@@ -203,7 +203,7 @@
     "groupTitle": "facebook",
     "sampleRequest": [
       {
-        "url": "http://likulator.loc/api/v1/facebook/getProfile"
+        "url": "http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com/api/v1/facebook/getProfile"
       }
     ]
   },
@@ -343,7 +343,7 @@
     "groupTitle": "facebook",
     "sampleRequest": [
       {
-        "url": "http://likulator.loc/api/v1/facebook/getUsers/:all/:city/:friends"
+        "url": "http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com/api/v1/facebook/getUsers/:all/:city/:friends"
       }
     ]
   }

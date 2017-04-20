@@ -30,7 +30,7 @@
   {
     "version": "1.0.0",
     "type": "post",
-    "url": "api/v1/facebook/deleteUser",
+    "url": "/deleteUser",
     "title": "deleteUser",
     "name": "deleteUser",
     "description": "<p>api deleting user by token</p> ",
@@ -76,12 +76,17 @@
       ]
     },
     "filename": "./deleteUser.coffee",
-    "groupTitle": "facebook"
+    "groupTitle": "facebook",
+    "sampleRequest": [
+      {
+        "url": "http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com/api/v1/facebook/deleteUser"
+      }
+    ]
   },
   {
     "version": "1.0.0",
     "type": "post",
-    "url": "api/v1/facebook/getProfile",
+    "url": "/getProfile",
     "title": "getProfile",
     "name": "getProfile",
     "description": "<p>api create or update user data using auth_token</p> ",
@@ -195,12 +200,17 @@
       ]
     },
     "filename": "./getProfile.coffee",
-    "groupTitle": "facebook"
+    "groupTitle": "facebook",
+    "sampleRequest": [
+      {
+        "url": "http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com/api/v1/facebook/getProfile"
+      }
+    ]
   },
   {
     "version": "1.0.0",
     "type": "post",
-    "url": "api/v1/facebook/getUsers/:all/:city/:friends",
+    "url": "/getUsers/:all/:city/:friends",
     "title": "getUsers",
     "name": "getUsers",
     "description": "<p>get users by city, friends, all</p> ",
@@ -208,6 +218,13 @@
     "parameter": {
       "fields": {
         "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "token",
+            "description": "<p>fb token</p> "
+          },
           {
             "group": "Parameter",
             "type": "Integer",
@@ -323,6 +340,11 @@
       ]
     },
     "filename": "./getUsers.coffee",
-    "groupTitle": "facebook"
+    "groupTitle": "facebook",
+    "sampleRequest": [
+      {
+        "url": "http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com/api/v1/facebook/getUsers/:all/:city/:friends"
+      }
+    ]
   }
 ]
