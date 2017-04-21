@@ -20,7 +20,7 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
             Route::post('getUsers/{flag}', ['as'=>'getUsers', 'uses'=>'GetController@GetUsers']);
         });
         Route::group(['prefix' => 'vk', 'as' => 'vk.'], function () {
-            Route::post('/test', ['as' => 'getProfile', 'uses' => 'VkController@test']);
+            Route::any('/getProfile', ['as' => 'getProfile', 'uses' => 'VkController@getProfile']);
         });
     });
 });
