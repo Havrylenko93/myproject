@@ -21,6 +21,8 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
         });
         Route::group(['prefix' => 'vk', 'as' => 'vk.'], function () {
             Route::any('/getProfile', ['as' => 'getProfile', 'uses' => 'VkController@getProfile']);
+            Route::any('/deleteUser', ['as' => 'deleteUser', 'uses' => 'VkController@deleteUser']);
+            Route::any('getUsers/{flag}', ['as'=>'getUsers', 'uses'=>'VkController@GetUsers']);
         });
     });
 });

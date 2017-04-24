@@ -13,7 +13,19 @@ class CreateVkUsersTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('vk_users', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->integer('vk_id');
+            $table->integer('city_id');
+            $table->string('avatar_url', 255);
+            $table->string('name', 255);
+            $table->integer('photo_like_count');
+            $table->integer('video_like_count');
+            $table->integer('wall_like_count');
+            $table->integer('total_like_count');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +35,6 @@ class CreateVkUsersTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('vk_users');
     }
 }
