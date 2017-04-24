@@ -45,7 +45,7 @@
         {
             "id": 3,
             "facebook_id": 411214595914433,
-            "city_id": 111649395528170,
+            "city_id": 211649395528170,
             "avatar_url": "https://graph.facebook.com/v2.8/411214595914433/picture",
             "name": "Sergei Gavrilenko",
             "last_calculating": "2017-04-24 16:20:36",
