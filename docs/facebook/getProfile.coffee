@@ -23,19 +23,24 @@
 }
 @apiSuccessExample {json} Response-Example:
 {
-  "data":
-  {
-      "name":"Sergei Gavrilenko",
-      "location":{"id":"111649395528170","name":"Kharkov, Ukraine"},
-      "id":"411214595914433",
-      "avatar_url":"https:\/\/graph.facebook.com\/v2.8\/411214595914433\/picture",
-      "likes":{
-                "photo_likes":4,
-                "video_likes":1,
-                "wall_likes":6,
-                "total_likes":11
-      }
-  },
-  "errors":[]
+    "data": {
+        "name": "Sergei Gavrilenko",
+        "location": {
+            "id": "111649395528170",
+            "name": "Kharkov, Ukraine"
+        },
+        "id": "411214595914433",
+        "avatar_url": "https://graph.facebook.com/v2.8/411214595914433/picture",
+        "posts_count": 3,
+        "photo_count": 6,
+        "video_count": 1,
+        "likes": {
+            "photo_likes": 2,
+            "video_likes": 1,
+            "wall_likes": 3,
+            "total_likes": 6
+        }
+    },
+    "errors": []
 }
 ###
