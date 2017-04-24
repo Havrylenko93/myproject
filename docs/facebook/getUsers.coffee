@@ -27,21 +27,36 @@
 }
 @apiSuccessExample {json} Response-Example:
 {
-  "data": [
-    {
-      "id": 18,
-      "facebook_id": 411214595914433,
-      "city_id": 111649395528170,
-      "avatar_url": "https://graph.facebook.com/v2.8/411214595914433/picture",
-      "name": "Sergei Gavrilenko",
-      "photo_like_count": 4,
-      "video_like_count": 1,
-      "wall_like_count": 6,
-      "total_like_count": 11,
-      "created_at": "2017-04-13 11:57:17",
-      "updated_at": "2017-04-13 12:16:23"
-    }
-  ],
-  "errors": []
+    "data": [
+        {
+            "id": 1,
+            "facebook_id": 1515154,
+            "city_id": 1558,
+            "avatar_url": "https://graph.facebook.com/v2.8/411214595914433/picture",
+            "name": "Ivanov Ivan",
+            "last_calculating": "2017-04-19 13:14:04",
+            "photo_like_count": 45,
+            "video_like_count": 47,
+            "wall_like_count": 15,
+            "total_like_count": 58,
+            "created_at": null,
+            "updated_at": null
+        },
+        {
+            "id": 3,
+            "facebook_id": 411214595914433,
+            "city_id": 111649395528170,
+            "avatar_url": "https://graph.facebook.com/v2.8/411214595914433/picture",
+            "name": "Sergei Gavrilenko",
+            "last_calculating": "2017-04-24 16:20:36",
+            "photo_like_count": 2,
+            "video_like_count": 1,
+            "wall_like_count": 3,
+            "total_like_count": 6,
+            "created_at": "2017-04-19 14:22:29",
+            "updated_at": "2017-04-24 16:20:36"
+        }
+    ],
+    "errors": []
 }
 ###
