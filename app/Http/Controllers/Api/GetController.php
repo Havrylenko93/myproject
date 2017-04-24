@@ -125,6 +125,7 @@ class GetController extends Controller
                 $users = DB::table('fb_users')
                     ->offset($request->offset)
                     ->limit($request->limit)
+                    ->orderBy('total_like_count','desc')
                     ->get();
                 return $this->customResponse($users);
             case 'city':
@@ -134,6 +135,7 @@ class GetController extends Controller
                     ->whereNotIn('facebook_id', [$user['id']])
                     ->offset($request->offset)
                     ->limit($request->limit)
+                    ->orderBy('total_like_count','desc')
                     ->get();
                 return $this->customResponse($users);
             case 'friends':
@@ -147,6 +149,7 @@ class GetController extends Controller
                     ->whereIn('facebook_id', $friends)
                     ->offset($request->offset)
                     ->limit($request->limit)
+                    ->orderBy('total_like_count','desc')
                     ->get();
                 return $this->customResponse($users);
         }
