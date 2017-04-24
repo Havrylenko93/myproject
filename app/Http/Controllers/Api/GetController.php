@@ -23,13 +23,24 @@ class GetController extends Controller
     public function getUserObj($request)
     {
         $user = Socialite::driver('FacebookConnect')->userByToken($request->token);
-        $response_data = array();
+        $response_data   = array();
+        $all_photo_count = 0;
+        $all_video_count = 0;
 
         if(isset($user['error'])) {
             $response_data['data'] = [];
             $response_data['errors'] = ['type'=>'token', 'msg'=>['malformed token']];
             return response()->json($response_data);
         }
+
+        foreach ($user['albums']['data'] as $album_data) {
+            $all_photo_count += $album_data['photo_count'];
+            $all_video_count += $album_data['video_count'];
+        }
+
+        $user['posts_count'] = count($user['posts']['data']);
+        $user['photo_count'] = $all_photo_count;
+        $user['video_count'] = $all_video_count;
         return $user;
     }
 
@@ -67,7 +78,8 @@ class GetController extends Controller
 
     }
 
-    public function calculateLikes($user) {
+    public function calculateLikes($user)
+    {
         $photo_count_likes = 0;
         $video_count_likes = 0;
         $wall_count_likes = 0;
@@ -113,6 +125,7 @@ class GetController extends Controller
         if($users){
             $users = ['msg'=>'user was deleted'];
         }
+
         return $this->customResponse($users);
     }
 
