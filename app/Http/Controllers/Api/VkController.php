@@ -10,7 +10,7 @@ use DB;
 
 class VkController extends Controller
 {
-
+    //permission: friends,photos,video,wall
     public function getProfile(Request $request)
     {
         $token       = $request->token;
@@ -145,6 +145,7 @@ class VkController extends Controller
 
     public function videos($token, $client,$user_id)
     {
+
         $meUrl1      = "https://api.vk.com/method/video.get?v=5.63";
 
         $response    = $this->getResponse($client, 0, $meUrl1, $token, 200, 1);

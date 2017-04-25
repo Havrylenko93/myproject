@@ -36,8 +36,8 @@ return [
     ],
 
     'facebook' => [
-        'client_id' => '244073739333381',
-        'client_secret' => '6ba4c0a9212c11c97072f16289a1183b', // App Secret
+        'client_id' => '1221760821196051',
+        'client_secret' => 'd60d15ee857220fb13eacea49b8d498c', // App Secret
         'redirect' => 'http://likulator.loc/api/v1/facebook/callback',
     ],
 
