@@ -1,6 +1,6 @@
 ###
 @apiVersion 1.0.0
-@api {post} /getProfile getProfile
+@api {post} facebook/getProfile getProfile
 @apiName getProfile
 @apiDescription api create or update user data using auth_token
 @apiPermission user_friends,user_likes,user_location,user_photos,user_posts,user_videos,read_custom_friendlists

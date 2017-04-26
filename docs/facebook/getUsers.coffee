@@ -1,6 +1,6 @@
 ###
 @apiVersion 1.0.0
-@api {post} /getUsers/:all/:city/:friends getUsers
+@api {post} facebook/getUsers/:all/:city/:friends getUsers
 @apiName getUsers
 @apiDescription get users by city, friends, all
 @apiPermission user_friends,user_likes,user_location,user_photos,user_posts,user_videos,read_custom_friendlists
