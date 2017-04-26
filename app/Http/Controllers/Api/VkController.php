@@ -7,18 +7,29 @@ use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use App\VkUsers;
 use DB;
+use Cache;
 
 class VkController extends Controller
 {
     //permission: friends,photos,video,wall
     public function getProfile(Request $request)
     {
-        $token       = $request->token;
+        $token = $request->token;
+        if (Cache::has($token))
+        {
+            return Cache::get($token);
+        }
+
         $url         = "https://api.vk.com/method/users.get?&extended=1&filter=likes&v=5.63";
         $client      = new Client();
         $response    = $client->get($url, ['query' => ['access_token' => $token, 'fields' => 'city,photo_200_orig',]])->getBody();
-        $response1[] = json_decode($response, true);
 
+        $response1[] = json_decode($response, true);
+        if(isset($response1[0]['error'])) {
+            $response_data['data']   = [];
+            $response_data['errors'][] = $response1[0]['error']['error_msg'];
+            return $response_data;
+        }
         $user = array();
 
         $user['vk_id']            = $response1[0]['response'][0]['uid'];
@@ -31,15 +42,21 @@ class VkController extends Controller
         $user['total_user_likes'] = $user['photos']['total_photo_likes']+$user['videos']['total_video_likes']+$user['wall']['total_wall_likes'];
 
         $this->updateOrRegister($user);
+        $custom_response = $this->customResponse($user);
+       // Cache::put($token, $custom_response, 10);
 
-        return $this->customResponse($user);
+        return $custom_response;
     }
 
     public function customResponse($data)
     {
         $response_data['data']   = $data;
         $response_data['errors'] = [];
-        return response()->json($response_data);
+
+        //var_dump(1, $this->unicodeJsonEncode($response_data));die;
+        //$response_data1[] = 'Кириллица';
+
+        return response()->json($response_data, 200, [], JSON_UNESCAPED_UNICODE);
     }
 
     public function getResponse($client, $offset = 0, $url, $token, $count = 100, $extended)
@@ -79,7 +96,7 @@ class VkController extends Controller
 
         }
         $total_count = array();
-        $total_count['all_posts_count'] = $response1[0]['response'][0];
+        $total_count['all_wall_count'] = $response1[0]['response'][0];
         $total_count['total_wall_likes'] = 0;
 
         foreach($response1 as $batch) {
@@ -213,6 +230,12 @@ class VkController extends Controller
         $response    = $client->get($url, ['query' => ['access_token' => $request->token]])->getBody();
         $response1[] = json_decode($response, true);
 
+        if(isset($response1[0]['error'])) {
+            $response_data['data']   = [];
+            $response_data['errors'][] = $response1[0]['error']['error_msg'];
+            return $response_data;
+        }
+
         $users = DB::table('vk_users')->where('vk_id', $response1[0]['response'][0]['uid'])->delete();
         if($users){
             $users = ['msg'=>'user was deleted'];
@@ -222,8 +245,6 @@ class VkController extends Controller
 
     public function getUsers($flag, Request $request)
     {
-        $friends = array();
-
         switch ($flag){
             case 'all':
                 $users = DB::table('vk_users')
@@ -236,6 +257,13 @@ class VkController extends Controller
                 $client        = new Client();
                 $response      = $client->get($url, ['query' => ['access_token' => $request->token, 'fields' => 'city,photo_200_orig',]])->getBody();
                 $user[]        = json_decode($response, true);
+
+                if(isset($user[0]['error'])) {
+                    $response_data['data']   = [];
+                    $response_data['errors'][] = $user[0]['error']['error_msg'];
+                    return $response_data;
+                }
+
                 $user['city']  = $user[0]['response'][0]['city'];
                 $user['vk_id'] = $user[0]['response'][0]['uid'];
 
@@ -251,6 +279,13 @@ class VkController extends Controller
                 $client        = new Client();
                 $response      = $client->get($url, ['query' => ['access_token' => $request->token]])->getBody();
                 $response1[]        = json_decode($response, true);
+
+                if(isset($response1[0]['error'])) {
+                    $response_data['data']   = [];
+                    $response_data['errors'][] = $response1[0]['error']['error_msg'];
+                    return $response_data;
+                }
+
                 $users = DB::table('vk_users')
                     ->whereIn('vk_id', $response1[0]['response'])
                     ->offset($request->offset)
@@ -259,4 +294,5 @@ class VkController extends Controller
                 return $this->customResponse($users);
         }
     }
+
 }

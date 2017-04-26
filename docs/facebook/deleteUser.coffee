@@ -1,6 +1,6 @@
 ###
 @apiVersion 1.0.0
-@api {post} /deleteUser  deleteUser
+@api {post} facebook/deleteUser  deleteUser
 @apiName deleteUser
 @apiDescription api deleting user by token
 @apiPermission user_friends,user_likes,user_location,user_photos,user_posts,user_videos,read_custom_friendlists

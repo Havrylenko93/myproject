@@ -155,7 +155,6 @@ class GetController extends Controller
                 $user = $this->getUserObj($request);
 
                 foreach($user['friendlists']['data'] as $friend) {
-                   // $friend_id = explode('_', $friend['id']);
                     $friends[] = $friend['id'];
                 }
                 $users = DB::table('fb_users')
