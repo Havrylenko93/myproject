@@ -12,6 +12,9 @@ use Cache;
 class VkController extends Controller
 {
     //permission: friends,photos,video,wall
+    // get "code" https://oauth.vk.com/authorize?client_id=6004450&display=page&redirect_uri=http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com&scope=friends,photos,video,wall&response_type=code&v=5.63
+    // get token https://oauth.vk.com/access_token?client_id=6004450&client_secret=i4sKln0H6QI4k6vtHYHh&redirect_uri=http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com&code=d03e67a56506968ddf
+
     public function getProfile(Request $request)
     {
         $token = $request->token;
@@ -43,7 +46,7 @@ class VkController extends Controller
 
         $this->updateOrRegister($user);
         $custom_response = $this->customResponse($user);
-       // Cache::put($token, $custom_response, 10);
+        //Cache::put($token, $custom_response, 120);
 
         return $custom_response;
     }
@@ -53,10 +56,7 @@ class VkController extends Controller
         $response_data['data']   = $data;
         $response_data['errors'] = [];
 
-        //var_dump(1, $this->unicodeJsonEncode($response_data));die;
-        //$response_data1[] = 'Кириллица';
-
-        return response()->json($response_data, 200, [], JSON_UNESCAPED_UNICODE);
+        return response()->json($response_data, 200, [], JSON_UNESCAPED_UNICODE)->header('Content-Type', 'application/json; charset=utf-8');
     }
 
     public function getResponse($client, $offset = 0, $url, $token, $count = 100, $extended)
@@ -95,6 +95,7 @@ class VkController extends Controller
             }
 
         }
+
         $total_count = array();
         $total_count['all_wall_count'] = $response1[0]['response'][0];
         $total_count['total_wall_likes'] = 0;
