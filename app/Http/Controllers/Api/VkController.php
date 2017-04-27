@@ -15,11 +15,24 @@ class VkController extends Controller
     // get "code" https://oauth.vk.com/authorize?client_id=6004450&display=page&redirect_uri=http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com&scope=friends,photos,video,wall&response_type=code&v=5.63
     // get token https://oauth.vk.com/access_token?client_id=6004450&client_secret=i4sKln0H6QI4k6vtHYHh&redirect_uri=http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com&code=d03e67a56506968ddf
 
+    public function getTokenByCode($code = '1a6b25b6bc272e2228')
+    {
+        if (Cache::has($code)) {
+            return Cache::get($code);
+        }
+        $client   = new Client();
+        $url      = "https://oauth.vk.com/access_token?client_id=6004450&client_secret=i4sKln0H6QI4k6vtHYHh&redirect_uri=http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com&code=".$code;
+        $response = $client->get($url)->getBody();
+        $response1[] = json_decode($response, true);
+        $token = $response1[0]['access_token'];
+        Cache::put($code, $token, 120);
+        return $token;
+    }
+
     public function getProfile(Request $request)
     {
-        $token = $request->token;
-        if (Cache::has($token))
-        {
+        $token = $this->getTokenByCode();
+        if (Cache::has($token)) {
             return Cache::get($token);
         }
 
@@ -103,12 +116,12 @@ class VkController extends Controller
         foreach($response1 as $batch) {
 
             foreach($batch['response'] as $post) {
-
-                if($post['likes']['user_likes'] == 0) {
+                $total_count['total_wall_likes'] += $post['likes']['count'];
+                /*if($post['likes']['user_likes'] == 0) {
                     $total_count['total_wall_likes'] += $post['likes']['count'];
                 }else{
                     $total_count['total_wall_likes'] += $post['likes']['count']-1;
-                }
+                }*/
             }
 
         }
@@ -226,9 +239,10 @@ class VkController extends Controller
 
     public function deleteUser(Request $request)
     {
+        $token = $this->getTokenByCode();
         $url         = "https://api.vk.com/method/users.get?&extended=1&v=5.63";
         $client      = new Client();
-        $response    = $client->get($url, ['query' => ['access_token' => $request->token]])->getBody();
+        $response    = $client->get($url, ['query' => ['access_token' => $token]])->getBody();
         $response1[] = json_decode($response, true);
 
         if(isset($response1[0]['error'])) {
@@ -246,6 +260,7 @@ class VkController extends Controller
 
     public function getUsers($flag, Request $request)
     {
+        $token = $this->getTokenByCode();
         switch ($flag){
             case 'all':
                 $users = DB::table('vk_users')
@@ -256,7 +271,7 @@ class VkController extends Controller
             case 'city':
                 $url           = "https://api.vk.com/method/users.get?&extended=1&filter=likes&v=5.63";
                 $client        = new Client();
-                $response      = $client->get($url, ['query' => ['access_token' => $request->token, 'fields' => 'city,photo_200_orig',]])->getBody();
+                $response      = $client->get($url, ['query' => ['access_token' => $token, 'fields' => 'city,photo_200_orig',]])->getBody();
                 $user[]        = json_decode($response, true);
 
                 if(isset($user[0]['error'])) {
@@ -278,7 +293,7 @@ class VkController extends Controller
             case 'friends':
                 $url           = "https://api.vk.com/method/friends.get?&v=5.63";
                 $client        = new Client();
-                $response      = $client->get($url, ['query' => ['access_token' => $request->token]])->getBody();
+                $response      = $client->get($url, ['query' => ['access_token' => $token]])->getBody();
                 $response1[]        = json_decode($response, true);
 
                 if(isset($response1[0]['error'])) {
