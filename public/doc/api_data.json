@@ -5,7 +5,7 @@
     "url": "facebook/deleteUser",
     "title": "deleteUser",
     "name": "deleteUser",
-    "description": "<p>api deleting user by token</p> ",
+    "description": "<p>api deleting user by token</p>",
     "permission": [
       {
         "name": "user_friends,user_likes,user_location,user_photos,user_posts,user_videos,read_custom_friendlists"
@@ -20,7 +20,7 @@
             "type": "String",
             "optional": false,
             "field": "token",
-            "description": "<p>fb token</p> "
+            "description": "<p>fb token</p>"
           }
         ]
       },
@@ -40,7 +40,7 @@
             "type": "String",
             "optional": false,
             "field": "msg",
-            "description": "<p>user was deleted</p> "
+            "description": "<p>user was deleted</p>"
           }
         ]
       },
@@ -66,7 +66,7 @@
     "url": "facebook/getProfile",
     "title": "getProfile",
     "name": "getProfile",
-    "description": "<p>api create or update user data using auth_token</p> ",
+    "description": "<p>api create or update user data using auth_token</p>",
     "permission": [
       {
         "name": "user_friends,user_likes,user_location,user_photos,user_posts,user_videos,read_custom_friendlists"
@@ -80,7 +80,7 @@
             "group": "Error 4xx",
             "optional": false,
             "field": "badToken",
-            "description": "<p>&quot;malformed token&quot; expiresed or incorrect</p> "
+            "description": "<p>&quot;malformed token&quot; expiresed or incorrect</p>"
           }
         ]
       }
@@ -93,7 +93,7 @@
             "type": "string",
             "optional": false,
             "field": "token",
-            "description": "<p>fb auth token</p> "
+            "description": "<p>fb auth token</p>"
           }
         ]
       },
@@ -113,63 +113,63 @@
             "type": "String",
             "optional": false,
             "field": "name",
-            "description": "<p>user name from FB (name and lastname)</p> "
+            "description": "<p>user name from FB (name and lastname)</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "locationId",
-            "description": "<p>city id from FB</p> "
+            "description": "<p>city id from FB</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "locationName",
-            "description": "<p>city name, country name</p> "
+            "description": "<p>city name, country name</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "id",
-            "description": "<p>facebook user id</p> "
+            "description": "<p>facebook user id</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "avatar_url",
-            "description": "<p>avatar_url</p> "
+            "description": "<p>avatar_url</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "photo_likes",
-            "description": "<p>photo_likes</p> "
+            "description": "<p>photo_likes</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "video_likes",
-            "description": "<p>video_likes</p> "
+            "description": "<p>video_likes</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "wall_likes",
-            "description": "<p>wall_likes</p> "
+            "description": "<p>wall_likes</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "total_likes",
-            "description": "<p>total_likes</p> "
+            "description": "<p>total_likes</p>"
           }
         ]
       },
@@ -195,7 +195,7 @@
     "url": "facebook/getUsers/:all/:city/:friends",
     "title": "getUsers",
     "name": "getUsers",
-    "description": "<p>get users by city, friends, all</p> ",
+    "description": "<p>get users by city, friends, all</p>",
     "permission": [
       {
         "name": "user_friends,user_likes,user_location,user_photos,user_posts,user_videos,read_custom_friendlists"
@@ -210,21 +210,21 @@
             "type": "String",
             "optional": false,
             "field": "token",
-            "description": "<p>fb token</p> "
+            "description": "<p>fb token</p>"
           },
           {
             "group": "Parameter",
             "type": "Integer",
             "optional": false,
             "field": "offset",
-            "description": "<p>offset</p> "
+            "description": "<p>offset</p>"
           },
           {
             "group": "Parameter",
             "type": "Integer",
             "optional": false,
             "field": "limit",
-            "description": "<p>limit</p> "
+            "description": "<p>limit</p>"
           }
         ]
       },
@@ -244,77 +244,77 @@
             "type": "Integer",
             "optional": false,
             "field": "id",
-            "description": "<p>internal id from db</p> "
+            "description": "<p>internal id from db</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "facebook_id",
-            "description": "<p>fb user id</p> "
+            "description": "<p>fb user id</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "city_id",
-            "description": "<p>fb city id</p> "
+            "description": "<p>fb city id</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "avatar_url",
-            "description": "<p>avatar url</p> "
+            "description": "<p>avatar url</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "name",
-            "description": "<p>name (first name, last name)</p> "
+            "description": "<p>name (first name, last name)</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "photo_likes",
-            "description": "<p>photo_likes</p> "
+            "description": "<p>photo_likes</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "video_likes",
-            "description": "<p>video_likes</p> "
+            "description": "<p>video_likes</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "wall_likes",
-            "description": "<p>wall_likes</p> "
+            "description": "<p>wall_likes</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "total_likes",
-            "description": "<p>total_likes</p> "
+            "description": "<p>total_likes</p>"
           },
           {
             "group": "Success 200",
             "type": "DateTime",
             "optional": false,
             "field": "created_ad",
-            "description": "<p>created_ad</p> "
+            "description": "<p>created_ad</p>"
           },
           {
             "group": "Success 200",
             "type": "DateTime",
             "optional": false,
             "field": "updated_at",
-            "description": "<p>updated_at</p> "
+            "description": "<p>updated_at</p>"
           }
         ]
       },
@@ -340,7 +340,7 @@
     "url": "vk/deleteUser",
     "title": "deleteUser",
     "name": "deleteUser",
-    "description": "<p>api deleting user by token</p> ",
+    "description": "<p>api deleting user by token</p>",
     "group": "vk",
     "parameter": {
       "fields": {
@@ -350,7 +350,7 @@
             "type": "String",
             "optional": false,
             "field": "token",
-            "description": "<p>vk token</p> "
+            "description": "<p>vk token</p>"
           }
         ]
       },
@@ -370,7 +370,7 @@
             "type": "String",
             "optional": false,
             "field": "msg",
-            "description": "<p>user was deleted</p> "
+            "description": "<p>user was deleted</p>"
           }
         ]
       },
@@ -396,7 +396,7 @@
     "url": "vk/getProfile",
     "title": "getProfile",
     "name": "getProfile",
-    "description": "<p>api create or update user data using auth_token</p> ",
+    "description": "<p>api create or update user data using auth_token</p>",
     "permission": [
       {
         "name": "friends,photos,video,wall"
@@ -410,7 +410,7 @@
             "group": "Error 4xx",
             "optional": false,
             "field": "badToken",
-            "description": "<p>&quot;malformed token&quot; expiresed or incorrect</p> "
+            "description": "<p>&quot;malformed token&quot; expiresed or incorrect</p>"
           }
         ]
       }
@@ -423,7 +423,7 @@
             "type": "string",
             "optional": false,
             "field": "token",
-            "description": "<p>vk token</p> "
+            "description": "<p>vk token</p>"
           }
         ]
       },
@@ -443,77 +443,77 @@
             "type": "Integer",
             "optional": false,
             "field": "vk_id",
-            "description": "<p>vk user id</p> "
+            "description": "<p>vk user id</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "name",
-            "description": "<p>user name from vk (name and lastname)</p> "
+            "description": "<p>user name from vk (name and lastname)</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "city",
-            "description": "<p>city id from vk</p> "
+            "description": "<p>city id from vk</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "avatar_url",
-            "description": "<p>avatar_url</p> "
+            "description": "<p>avatar_url</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "all_wall_count",
-            "description": "<p>all_wall_count</p> "
+            "description": "<p>all_wall_count</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "total_wall_likes",
-            "description": "<p>total_wall_likes</p> "
+            "description": "<p>total_wall_likes</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "all_photos_count",
-            "description": "<p>all_photos_count</p> "
+            "description": "<p>all_photos_count</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "total_photo_likes",
-            "description": "<p>total_photo_likes</p> "
+            "description": "<p>total_photo_likes</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "all_video_count",
-            "description": "<p>all_video_count</p> "
+            "description": "<p>all_video_count</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "total_video_likes",
-            "description": "<p>total_video_likes</p> "
+            "description": "<p>total_video_likes</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "total_user_likes",
-            "description": "<p>total_user_likes</p> "
+            "description": "<p>total_user_likes</p>"
           }
         ]
       },
@@ -539,7 +539,7 @@
     "url": "vk/getUsers/:all/:city/:friends",
     "title": "getUsers",
     "name": "getUsers",
-    "description": "<p>get users by city, friends, all</p> ",
+    "description": "<p>get users by city, friends, all</p>",
     "permission": [
       {
         "name": "friends,photos,video,wall"
@@ -554,21 +554,21 @@
             "type": "String",
             "optional": false,
             "field": "token",
-            "description": "<p>vk token</p> "
+            "description": "<p>vk token</p>"
           },
           {
             "group": "Parameter",
             "type": "Integer",
             "optional": false,
             "field": "offset",
-            "description": "<p>offset</p> "
+            "description": "<p>offset</p>"
           },
           {
             "group": "Parameter",
             "type": "Integer",
             "optional": false,
             "field": "limit",
-            "description": "<p>limit</p> "
+            "description": "<p>limit</p>"
           }
         ]
       },
@@ -588,77 +588,77 @@
             "type": "Integer",
             "optional": false,
             "field": "vk_id",
-            "description": "<p>vk user id</p> "
+            "description": "<p>vk user id</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "name",
-            "description": "<p>user name from vk (name and lastname)</p> "
+            "description": "<p>user name from vk (name and lastname)</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "city",
-            "description": "<p>city id from vk</p> "
+            "description": "<p>city id from vk</p>"
           },
           {
             "group": "Success 200",
             "type": "String",
             "optional": false,
             "field": "avatar_url",
-            "description": "<p>avatar_url</p> "
+            "description": "<p>avatar_url</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "all_wall_count",
-            "description": "<p>all_wall_count</p> "
+            "description": "<p>all_wall_count</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "total_wall_likes",
-            "description": "<p>total_wall_likes</p> "
+            "description": "<p>total_wall_likes</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "all_photos_count",
-            "description": "<p>all_photos_count</p> "
+            "description": "<p>all_photos_count</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "total_photo_likes",
-            "description": "<p>total_photo_likes</p> "
+            "description": "<p>total_photo_likes</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "all_video_count",
-            "description": "<p>all_video_count</p> "
+            "description": "<p>all_video_count</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "total_video_likes",
-            "description": "<p>total_video_likes</p> "
+            "description": "<p>total_video_likes</p>"
           },
           {
             "group": "Success 200",
             "type": "Integer",
             "optional": false,
             "field": "total_user_likes",
-            "description": "<p>total_user_likes</p> "
+            "description": "<p>total_user_likes</p>"
           }
         ]
       },
