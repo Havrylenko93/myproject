@@ -143,6 +143,12 @@ class GetController extends Controller
                 return $this->customResponse($users);
             case 'city':
                 $user = $this->getUserObj($request);
+
+                if(!isset($user['location']['id'])) {
+                    $response_data['data'] = [];
+                    $response_data['errors'] = ["Not found user location"];
+                }
+
                 $users = DB::table('fb_users')
                     ->where('city_id', $user['location']['id'])
                     ->whereNotIn('facebook_id', [$user['id']])
@@ -154,6 +160,10 @@ class GetController extends Controller
             case 'friends':
                 $user = $this->getUserObj($request);
 
+                if(!isset($user['friendlists']['data'])) {
+                    $response_data['data'] = [];
+                    $response_data['errors'] = ["Not found user friendlists"];
+                }
                 foreach($user['friendlists']['data'] as $friend) {
                     $friend_id = explode('_', $friend['id']);
                     $friends[] = $friend_id[1];
