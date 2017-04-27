@@ -28,8 +28,9 @@ class GetController extends Controller
         $all_video_count = 0;
 
         if(isset($user['error'])) {
-            $responese['errors'] = $user['error'];
-            return $responese;
+            $response_data['data'] = [];
+            $response_data['errors'] = ['type'=>'token', 'msg'=>['malformed token']];
+            return response()->json($response_data);
         }
 
         foreach ($user['albums']['data'] as $album_data) {
@@ -47,13 +48,6 @@ class GetController extends Controller
     {
         $user = $this->getUserObj($request);
 
-	if(isset($user['errors'])) {
-		$user_er = explode('{"error":{"message":', $user['errors']);
-		$error_str = $user_er[1].'"}';
-		$data['data'] = [];
-		$data['error'] = $error_str;
-		return response()->json($data);
-        }
         $user['likes'] = $this->calculateLikes($user);
 
         unset($user['albums']);
@@ -72,8 +66,8 @@ class GetController extends Controller
             ['facebook_id' => $user['id']],
             [
                 "facebook_id"       => $user['id'],
-                "city_id"           =>isset($user['location']['id'])?(int)$user['location']['id']:0,
-                "avatar_url"        => $user['avatar_url'],
+                "city_id"           => isset($user['location']['id']) ? (int)$user['location']['id']:0,
+                "avatar_url"        => isset($user['avatar_url']) ? $user['avatar_url']: '',
                 "name"              => $user['name'],
                 "photo_like_count"  => $user['likes']['photo_likes'],
                 "video_like_count"  => $user['likes']['video_likes'],
@@ -161,7 +155,8 @@ class GetController extends Controller
                 $user = $this->getUserObj($request);
 
                 foreach($user['friendlists']['data'] as $friend) {
-                    $friends[] = $friend['id'];
+                    $friend_id = explode('_', $friend['id']);
+                    $friends[] = $friend_id[1];
                 }
                 $users = DB::table('fb_users')
                     ->whereIn('facebook_id', $friends)
