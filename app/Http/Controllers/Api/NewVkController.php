@@ -59,13 +59,13 @@ class NewVkController extends Controller
             ['vk_id' => $vk_id],
             [
                 "vk_id"       => $vk_id,
-                "city_id"           => (int)$user['city'],
-                "avatar_url"        => $user['avatar_url'],
-                "name"              => $user['name'],
-                "photo_like_count"  => $user['photos']['total_photo_likes'],
-                "video_like_count"  => $user['videos']['total_video_likes'],
-                "wall_like_count"   => $user['wall']['total_wall_likes'],
-                "total_like_count"  => $user['total_user_likes']
+                "city_id"           => $city_id ,
+                "avatar_url"        => $avatar_url,
+                "name"              => $name,
+                "photo_like_count"  => $photo_like_count,
+                "video_like_count"  => $video_like_count,
+                "wall_like_count"   => $wall_like_count,
+                "total_like_count"  => $total_like_count
             ]
         );
     }
