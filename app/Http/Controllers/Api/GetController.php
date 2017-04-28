@@ -118,7 +118,8 @@ class GetController extends Controller
         return $res;
     }
 
-    public function deleteUser(Request $request) {
+    public function deleteUser(Request $request)
+    {
         $user = $this->getUserObj($request);
 
         $users = DB::table('fb_users')->where('facebook_id', $user['id'])->delete();
@@ -178,6 +179,43 @@ class GetController extends Controller
                     ->get();
                 return $this->customResponse($users);
         }
+    }
+
+    public function updateOrCreateUser(Request $request)
+    {
+
+        if(!isset($request->fbId)) {
+            $data['data'] =[];
+            $data['error'] = ['msg'=>'fbId not found'];
+            return response()->json($data);
+        }
+
+        $fb_id            = (int)$request->fbId;
+        $city_id          = isset($request->cityId) ? (int)$request->cityId : 0;
+        $avatar_url       = isset($request->avatarUrl) ? $request->avatarUrl : ' ';
+        $name             = isset($request->name) ? $request->name : ' ';
+        $photo_like_count = isset($request->photoLikes) ? (int)$request->photoLikes : 0;
+        $video_like_count = isset($request->videoLikes) ? (int)$request->videoLikes : 0;
+        $wall_like_count  = isset($request->wallLikes) ? (int)$request->wallLikes : 0;
+        $total_like_count = $photo_like_count+$video_like_count+$wall_like_count;
+
+        $success = FacebookUsers::updateOrCreate(
+            ['facebook_id' => $fb_id],
+            [
+                "facebook_id"       => $fb_id,
+                "city_id"           => $city_id,
+                "avatar_url"        => $avatar_url,
+                "name"              => $name,
+                "photo_like_count"  => $photo_like_count,
+                "video_like_count"  => $video_like_count,
+                "wall_like_count"   => $wall_like_count,
+                "total_like_count"  => $total_like_count
+            ]
+        );
+
+        $data['data'] = 200;
+        $data['errors'] = [];
+        return response()->json($data);
     }
 
 }

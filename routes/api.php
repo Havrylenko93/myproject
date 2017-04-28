@@ -15,9 +15,11 @@ use Illuminate\Http\Request;
 Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
     Route::group(['prefix' => 'v1', 'as' => 'v1.'], function () {
         Route::group(['prefix' => 'facebook', 'as' => 'facebook.'], function () {
-            Route::post('/getProfile', ['as' => 'getProfile', 'uses' => 'GetController@getProfile']);
+            /*Route::post('/getProfile', ['as' => 'getProfile', 'uses' => 'GetController@getProfile']);*/
             Route::post('/deleteUser', ['as' => 'deleteUser', 'uses' => 'GetController@deleteUser']);
             Route::post('getUsers/{flag}', ['as'=>'getUsers', 'uses'=>'GetController@GetUsers']);
+            Route::post('/updateOrCreateUser', ['as' => 'updateOrCreateUser', 'uses' => 'GetController@updateOrCreateUser']);
+
         });
         Route::group(['prefix' => 'vk', 'as' => 'vk.'], function () {
             Route::any('/getProfile', ['as' => 'getProfile', 'uses' => 'VkController@getProfile']);
