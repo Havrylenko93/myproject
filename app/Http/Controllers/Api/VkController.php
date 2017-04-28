@@ -12,7 +12,7 @@ use Cache;
 class VkController extends Controller
 {
     //permission: friends,photos,video,wall
-    // get "code" https://oauth.vk.com/authorize?client_id=6004450&display=page&redirect_uri=http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com&scope=friends,photos,video,wall&response_type=code&v=5.63
+    // get "code" https://oauth.vk.com/authorize?client_id=6004450&display=page&redirect_uri=http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com&scope=offline,friends,photos,video,wall&response_type=code&v=5.63
     // get token https://oauth.vk.com/access_token?client_id=6004450&client_secret=i4sKln0H6QI4k6vtHYHh&redirect_uri=http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com&code=d03e67a56506968ddf
 
     public function getTokenByCode($code = 'ea14070ca9d74aeec2')

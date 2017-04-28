@@ -147,6 +147,7 @@ class GetController extends Controller
                 if(!isset($user['location']['id'])) {
                     $response_data['data'] = [];
                     $response_data['errors'] = ["Not found user location"];
+                    return $response_data;
                 }
 
                 $users = DB::table('fb_users')
@@ -163,6 +164,7 @@ class GetController extends Controller
                 if(!isset($user['friendlists']['data'])) {
                     $response_data['data'] = [];
                     $response_data['errors'] = ["Not found user friendlists"];
+                    return $response_data;
                 }
                 foreach($user['friendlists']['data'] as $friend) {
                     $friend_id = explode('_', $friend['id']);
