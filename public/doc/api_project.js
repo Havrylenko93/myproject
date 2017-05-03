@@ -5,12 +5,11 @@ define({
   "title": "likulator",
   "url": "http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com/api/v1/",
   "sampleUrl": "http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com/api/v1/",
-  "defaultVersion": "0.0.0",
-  "apidoc": "0.3.0",
+  "apidoc": "0.2.0",
   "generator": {
     "name": "apidoc",
-    "time": "2017-04-26T14:18:48.066Z",
+    "time": "2017-05-03T08:37:25.997Z",
     "url": "http://apidocjs.com",
-    "version": "0.17.5"
+    "version": "0.12.3"
   }
 });
