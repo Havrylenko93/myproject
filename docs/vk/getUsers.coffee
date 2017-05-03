@@ -6,7 +6,7 @@
 @apiPermission friends,photos,video,wall
 @apiGroup vk
 
-@apiParam {String} token vk token
+@apiParam {String} code vk code for getting token
 @apiParam {Integer} offset offset
 @apiParam {Integer} limit limit
 
