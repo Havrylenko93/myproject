@@ -22,16 +22,16 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
 
         });
         Route::group(['prefix' => 'vk', 'as' => 'vk.'], function () {
-            Route::any('/getProfile', ['as' => 'getProfile', 'uses' => 'VkController@getProfile']);
+            Route::any('/updateOrCreateUser', ['as' => 'updateOrCreateUser', 'uses' => 'VkController@updateOrCreateUser']);
             Route::any('/deleteUser', ['as' => 'deleteUser', 'uses' => 'VkController@deleteUser']);
             Route::any('getUsers/{flag}', ['as'=>'getUsers', 'uses'=>'VkController@GetUsers']);
         });
-        Route::group(['prefix' => 'newvk', 'as' => 'vk.'], function () {
+        /*Route::group(['prefix' => 'newvk', 'as' => 'vk.'], function () {
             Route::any('/getAll', ['as' => 'getAll', 'uses' => 'NewVkController@getAll']);
             Route::any('/getUsersByIds', ['as' => 'getUsersByIds', 'uses' => 'NewVkController@getUsersByIds']);
             Route::any('/getUsersByCity', ['as'=>'getUsersByCity', 'uses'=>'NewVkController@getUsersByCity']);
             Route::any('/createOrUpdate', ['as'=>'createOrUpdate', 'uses'=>'NewVkController@createOrUpdate']);
-        });
+        });*/
     });
 });
 

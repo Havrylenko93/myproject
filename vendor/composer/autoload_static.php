@@ -323,7 +323,6 @@ class ComposerStaticInit3613c3cdb3b3b938e788be0ae786b816
     );
 
     public static $classMap = array (
-        'CreateFacebookUsers' => __DIR__ . '/../..' . '/database/migrations/2017_04_07_163140_create_facebook_users.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'CreateVkUsersTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_21_161809_create_vk_users_table.php',
@@ -858,6 +857,7 @@ class ComposerStaticInit3613c3cdb3b3b938e788be0ae786b816
         'SebastianBergmann\\ResourceOperations\\ResourceOperations' => __DIR__ . '/..' . '/sebastian/resource-operations/src/ResourceOperations.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
+        'VkCodeToToken' => __DIR__ . '/../..' . '/database/migrations/2017_04_28_125727_vkCodeToToken.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

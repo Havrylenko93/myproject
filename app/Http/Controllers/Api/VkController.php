@@ -11,21 +11,34 @@ use Cache;
 
 class VkController extends Controller
 {
-    //permission: friends,photos,video,wall
+    //permission: offline,friends,photos,video,wall
     // get "code" https://oauth.vk.com/authorize?client_id=6004450&display=page&redirect_uri=http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com&scope=offline,friends,photos,video,wall&response_type=code&v=5.63
     // get token https://oauth.vk.com/access_token?client_id=6004450&client_secret=i4sKln0H6QI4k6vtHYHh&redirect_uri=http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com&code=d03e67a56506968ddf
 
-    public function getTokenByCode($code = 'ea14070ca9d74aeec2')
+    public function getTokenByCode($code)
     {
-        if (Cache::has($code)) {
-            return Cache::get($code);
+        $db_result = DB::table('vkCodeToToken')
+            ->where('code', $code)
+            ->get();
+
+        if(isset($db_result[0]->token)) {
+            return $db_result[0]->token;
         }
         $client   = new Client();
-        $url      = "https://oauth.vk.com/access_token?client_id=6004450&client_secret=i4sKln0H6QI4k6vtHYHh&redirect_uri=http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com&code=".$code;
-        $response = $client->get($url)->getBody();
-        $response1[] = json_decode($response, true);
+        try{
+            $url      = "https://oauth.vk.com/access_token?client_id=6004450&client_secret=i4sKln0H6QI4k6vtHYHh&redirect_uri=http://ec2-54-229-150-116.eu-west-1.compute.amazonaws.com&code=".$code;
+            $response = $client->get($url)->getBody();
+            $response1[] = json_decode($response, true);
+        }catch(\Exception $e){
+            return $e->getMessage();
+        }
+
         $token = $response1[0]['access_token'];
-        Cache::put($code, $token, 120);
+
+        DB::table('vkCodeToToken')->insert([
+            ['code' => $code, 'token' => $token]
+        ]);
+
         return $token;
     }
 
@@ -260,12 +273,14 @@ class VkController extends Controller
 
     public function getUsers($flag, Request $request)
     {
-        $token = $this->getTokenByCode();
+        $token = $this->getTokenByCode($request->code);
+        $offset = isset($request->offset) ? (int)$request->offset : 0;
+        $limit = isset($request->limit) ? (int)$request->limit : 100000;
         switch ($flag){
             case 'all':
                 $users = DB::table('vk_users')
-                    ->offset($request->offset)
-                    ->limit($request->limit)
+                    ->offset($offset)
+                    ->limit($limit)
                     ->get();
                 return $this->customResponse($users);
             case 'city':
@@ -286,8 +301,8 @@ class VkController extends Controller
                 $users = DB::table('vk_users')
                     ->where('city_id', $user['city'])
                     ->whereNotIn('vk_id', [$user['vk_id']])
-                    ->offset($request->offset)
-                    ->limit($request->limit)
+                    ->offset($offset)
+                    ->limit($limit)
                     ->get();
                 return $this->customResponse($users);
             case 'friends':
@@ -304,11 +319,47 @@ class VkController extends Controller
 
                 $users = DB::table('vk_users')
                     ->whereIn('vk_id', $response1[0]['response'])
-                    ->offset($request->offset)
-                    ->limit($request->limit)
+                    ->offset($offset)
+                    ->limit($limit)
                     ->get();
                 return $this->customResponse($users);
         }
     }
 
+    public function updateOrCreateUser(Request $request)
+    {
+
+        if(!isset($request->vkId)) {
+            $data['data'] =[];
+            $data['error'] = ['msg'=>'vkId not found'];
+            return response()->json($data);
+        }
+
+        $vk_id            = (int)$request->vkId;
+        $city_id          = isset($request->cityId) ? (int)$request->cityId : 0;
+        $avatar_url       = isset($request->avatarUrl) ? $request->avatarUrl : ' ';
+        $name             = isset($request->name) ? $request->name : ' ';
+        $photo_like_count = isset($request->photoLikes) ? (int)$request->photoLikes : 0;
+        $video_like_count = isset($request->videoLikes) ? (int)$request->videoLikes : 0;
+        $wall_like_count  = isset($request->wallLikes) ? (int)$request->wallLikes : 0;
+        $total_like_count = $photo_like_count+$video_like_count+$wall_like_count;
+
+        $success = VkUsers::updateOrCreate(
+            ['vk_id' => $vk_id],
+            [
+                "vk_id"       => $vk_id,
+                "city_id"           => $city_id,
+                "avatar_url"        => $city_id,
+                "name"              => $name,
+                "photo_like_count"  => $photo_like_count,
+                "video_like_count"  => $video_like_count,
+                "wall_like_count"   => $wall_like_count,
+                "total_like_count"  => $total_like_count
+            ]
+        );
+
+        $data['data'] = 200;
+        $data['errors'] = [];
+        return response()->json($data);
+    }
 }

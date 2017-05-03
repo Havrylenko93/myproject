@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'CreateFacebookUsers' => $baseDir . '/database/migrations/2017_04_07_163140_create_facebook_users.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'CreateVkUsersTable' => $baseDir . '/database/migrations/2017_04_21_161809_create_vk_users_table.php',
@@ -541,4 +540,5 @@ return array(
     'SebastianBergmann\\ResourceOperations\\ResourceOperations' => $vendorDir . '/sebastian/resource-operations/src/ResourceOperations.php',
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
+    'VkCodeToToken' => $baseDir . '/database/migrations/2017_04_28_125727_vkCodeToToken.php',
 );
