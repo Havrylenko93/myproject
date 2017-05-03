@@ -32,9 +32,9 @@ class GetController extends Controller
         $all_video_count = 0;
 
         if(isset($user['error'])) {
-            $response_data['data'] = [];
-            $response_data['errors'] = ['type'=>'token', 'msg'=>['malformed token']];
-            return response()->json($response_data);
+            $response_data['errors'] = true;
+            $response_data['err_msg'] =  'malformed token';
+            return $response_data;
         }
 
         foreach ($user['albums']['data'] as $album_data) {
@@ -142,6 +142,13 @@ class GetController extends Controller
         switch ($flag){
             case 'all':
                 $user = $this->getUserObj($request);
+
+                if(isset($user['errors'])) {
+                    $data['data'] = [];
+                    $data['errors'] = $user['err_msg'];
+                    return $data;
+                }
+
                 $users = DB::table('fb_users')
                     ->offset($offset)
                     ->limit($limit)
@@ -163,6 +170,12 @@ class GetController extends Controller
                 return $this->customResponse($users);
             case 'city':
                 $user = $this->getUserObj($request);
+
+                if(isset($user['errors'])) {
+                    $data['data'] = [];
+                    $data['errors'] = $user['err_msg'];
+                    return $data;
+                }
 
                 if(!isset($user['location']['id'])) {
                     $response_data['data'] = [];
@@ -200,6 +213,12 @@ class GetController extends Controller
                 return $this->customResponse($users);
             case 'friends':
                 $user = $this->getUserObj($request);
+
+                if(isset($user['errors'])) {
+                    $data['data'] = [];
+                    $data['errors'] = $user['err_msg'];
+                    return $data;
+                }
 
                 if(!isset($user['friendlists']['data'])) {
                     $response_data['data'] = [];
