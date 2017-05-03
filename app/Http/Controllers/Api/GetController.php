@@ -15,6 +15,10 @@ class GetController extends Controller
 {
     public function customResponse($users)
     {
+        if(isset($users['position'])) {
+            $response_data['position'] = $users['position'];
+            unset($users['position']);
+        }
         $response_data['data'] = $users;
         $response_data['errors'] = [];
         return response()->json($response_data);
@@ -137,12 +141,25 @@ class GetController extends Controller
         $limit = isset($request->limit) ? (int)$request->limit : 100000;
         switch ($flag){
             case 'all':
+                $user = $this->getUserObj($request);
                 $users = DB::table('fb_users')
                     ->offset($offset)
                     ->limit($limit)
                     ->orderBy('total_like_count','desc')
                     ->get();
 
+                $i        = 1;
+                $position = 0;
+
+            foreach ($users as $usr) {
+
+                if($usr->facebook_id == $user['id']) {
+                    $position = $i;
+                }
+                $i++;
+
+            }
+                $users['position'] = $position;
                 return $this->customResponse($users);
             case 'city':
                 $user = $this->getUserObj($request);
@@ -160,6 +177,26 @@ class GetController extends Controller
                     ->limit($limit)
                     ->orderBy('total_like_count','desc')
                     ->get();
+
+                $users_position = DB::table('fb_users')
+                    ->where('city_id', $user['location']['id'])
+                    ->offset($offset)
+                    ->limit($limit)
+                    ->orderBy('total_like_count','desc')
+                    ->get();
+                $i        = 1;
+                $position = 0;
+
+                foreach ($users_position as $usr) {
+
+                    if($usr->facebook_id == $user['id']) {
+                        $position = $i;
+                    }
+                    $i++;
+
+                }
+
+                $users['position'] = $position;
                 return $this->customResponse($users);
             case 'friends':
                 $user = $this->getUserObj($request);
@@ -178,6 +215,27 @@ class GetController extends Controller
                     ->limit($limit)
                     ->orderBy('total_like_count','desc')
                     ->get();
+
+                $friends[] = $user['id'];
+                $users_position = DB::table('fb_users')
+                    ->whereIn('facebook_id', $friends)
+                    ->offset($offset)
+                    ->limit($limit)
+                    ->orderBy('total_like_count','desc')
+                    ->get();
+
+                $i        = 1;
+                $position = 0;
+
+                foreach ($users_position as $usr) {
+
+                    if($usr->facebook_id == $user['id']) {
+                        $position = $i;
+                    }
+                    $i++;
+
+                }
+                $users['position'] = $position;
                 return $this->customResponse($users);
         }
     }
@@ -217,5 +275,4 @@ class GetController extends Controller
         $data['errors'] = [];
         return response()->json($data);
     }
-
 }
