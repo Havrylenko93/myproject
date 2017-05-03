@@ -213,33 +213,6 @@ class GetController extends Controller
             ]
         );
 
-        /*if(isset($request->token)) {
-            $user = $this->getUserObj($request);
-
-            if(!isset($user['friendlists']['data'])) {
-                $friend_position = 0;
-            }else{
-                // if isset friends
-                foreach($user['friendlists']['data'] as $friend) {
-                    $friends[] = $friend['id'];
-                }
-
-                $users = DB::table('fb_users')
-                    ->whereIn('facebook_id', [$friends])
-                    ->offset(0)
-                    ->limit(10000)
-                    ->orderBy('total_like_count','desc')
-                    ->get();
-            }
-
-        }*/
-        $users = DB::table('fb_users')
-            ->whereIn('facebook_id', [$friends])
-            ->offset(0)
-            ->limit(10000)
-            ->orderBy('total_like_count','desc')
-            ->get();
-
         $data['data'] = 200;
         $data['errors'] = [];
         return response()->json($data);
