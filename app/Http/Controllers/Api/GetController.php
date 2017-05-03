@@ -185,22 +185,15 @@ class GetController extends Controller
 
                 $users = DB::table('fb_users')
                     ->where('city_id', $user['location']['id'])
-                    ->whereNotIn('facebook_id', [$user['id']])
                     ->offset($offset)
                     ->limit($limit)
                     ->orderBy('total_like_count','desc')
                     ->get();
 
-                $users_position = DB::table('fb_users')
-                    ->where('city_id', $user['location']['id'])
-                    ->offset($offset)
-                    ->limit($limit)
-                    ->orderBy('total_like_count','desc')
-                    ->get();
                 $i        = 1;
                 $position = 0;
 
-                foreach ($users_position as $usr) {
+                foreach ($users as $usr) {
 
                     if($usr->facebook_id == $user['id']) {
                         $position = $i;
@@ -228,15 +221,8 @@ class GetController extends Controller
                 foreach($user['friendlists']['data'] as $friend) {
                     $friends[] = $friend['id'];
                 }
-                $users = DB::table('fb_users')
-                    ->whereIn('facebook_id', $friends)
-                    ->offset($offset)
-                    ->limit($limit)
-                    ->orderBy('total_like_count','desc')
-                    ->get();
-
                 $friends[] = $user['id'];
-                $users_position = DB::table('fb_users')
+                $users = DB::table('fb_users')
                     ->whereIn('facebook_id', $friends)
                     ->offset($offset)
                     ->limit($limit)
@@ -246,7 +232,7 @@ class GetController extends Controller
                 $i        = 1;
                 $position = 0;
 
-                foreach ($users_position as $usr) {
+                foreach ($users as $usr) {
 
                     if($usr->facebook_id == $user['id']) {
                         $position = $i;

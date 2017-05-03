@@ -334,22 +334,15 @@ class VkController extends Controller
 
                 $users = DB::table('vk_users')
                     ->where('city_id', $user['city'])
-                    ->whereNotIn('vk_id', [$user['vk_id']])
                     ->offset($offset)
                     ->limit($limit)
                     ->orderBy('total_like_count','desc')
                     ->get();
 
-                $users_position = DB::table('vk_users')
-                    ->where('city_id', $user['city'])
-                    ->offset($offset)
-                    ->limit($limit)
-                    ->orderBy('total_like_count','desc')
-                    ->get();
                 $i        = 1;
                 $position = 0;
 
-                foreach ($users_position as $usr) {
+                foreach ($users as $usr) {
 
                     if($usr->vk_id == $user['vk_id']) {
                         $position = $i;
@@ -413,8 +406,8 @@ class VkController extends Controller
                     $i++;
 
                 }
-                $users['position'] = $position;
-                return $this->customResponse($users);
+                $users_position['position'] = $position;
+                return $this->customResponse($users_position);
         }
     }
 
