@@ -349,7 +349,7 @@ class VkController extends Controller
             [
                 "vk_id"       => $vk_id,
                 "city_id"           => $city_id,
-                "avatar_url"        => $city_id,
+                "avatar_url"        => $avatar_url,
                 "name"              => $name,
                 "photo_like_count"  => $photo_like_count,
                 "video_like_count"  => $video_like_count,
