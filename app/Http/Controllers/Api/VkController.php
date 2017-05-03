@@ -79,6 +79,10 @@ class VkController extends Controller
 
     public function customResponse($data)
     {
+        if(isset($data['position'])) {
+            $response_data['position'] = $data['position'];
+            unset($data['position']);
+        }
         $response_data['data']   = $data;
         $response_data['errors'] = [];
 
@@ -278,10 +282,40 @@ class VkController extends Controller
         $limit = isset($request->limit) ? (int)$request->limit : 100000;
         switch ($flag){
             case 'all':
+                //>
+                $url         = "https://api.vk.com/method/users.get?&extended=1&filter=likes&v=5.63";
+                $client      = new Client();
+                $response    = $client->get($url, ['query' => ['access_token' => $token]])->getBody();
+
+                $response1[] = json_decode($response, true);
+
+                if(isset($response1[0]['error'])) {
+                    $response_data['data']   = [];
+                    $response_data['errors'][] = $response1[0]['error']['error_msg'];
+                    return $response_data;
+                }
+
+                $vk_id = $response1[0]['response'][0]['uid'];
+                //<//
                 $users = DB::table('vk_users')
                     ->offset($offset)
                     ->limit($limit)
+                    ->orderBy('total_like_count','desc')
                     ->get();
+
+                $i        = 1;
+                $position = 0;
+
+                foreach ($users as $usr) {
+
+                    if($usr->vk_id == $vk_id) {
+                        $position = $i;
+                    }
+                    $i++;
+
+                }
+                $users['position'] = $position;
+
                 return $this->customResponse($users);
             case 'city':
                 $url           = "https://api.vk.com/method/users.get?&extended=1&filter=likes&v=5.63";
@@ -303,7 +337,29 @@ class VkController extends Controller
                     ->whereNotIn('vk_id', [$user['vk_id']])
                     ->offset($offset)
                     ->limit($limit)
+                    ->orderBy('total_like_count','desc')
                     ->get();
+
+                $users_position = DB::table('vk_users')
+                    ->where('city_id', $user['city'])
+                    ->offset($offset)
+                    ->limit($limit)
+                    ->orderBy('total_like_count','desc')
+                    ->get();
+                $i        = 1;
+                $position = 0;
+
+                foreach ($users_position as $usr) {
+
+                    if($usr->vk_id == $user['vk_id']) {
+                        $position = $i;
+                    }
+                    $i++;
+
+                }
+
+                $users['position'] = $position;
+
                 return $this->customResponse($users);
             case 'friends':
                 $url           = "https://api.vk.com/method/friends.get?&v=5.63";
@@ -321,7 +377,43 @@ class VkController extends Controller
                     ->whereIn('vk_id', $response1[0]['response'])
                     ->offset($offset)
                     ->limit($limit)
+                    ->orderBy('total_like_count','desc')
                     ->get();
+                //get user data
+                $url1         = "https://api.vk.com/method/users.get?&extended=1&filter=likes&v=5.63";
+                $client1      = new Client();
+                $response2    = $client->get($url1, ['query' => ['access_token' => $token]])->getBody();
+
+                $response3[] = json_decode($response2, true);
+
+                if(isset($response3[0]['error'])) {
+                    $response_data['data']   = [];
+                    $response_data['errors'][] = $response3[0]['error']['error_msg'];
+                    return $response_data;
+                }
+
+                $vk_id = $response3[0]['response'][0]['uid'];
+
+                $friends[] = $vk_id;
+                $users_position = DB::table('vk_users')
+                    ->whereIn('vk_id', $friends)
+                    ->offset($offset)
+                    ->limit($limit)
+                    ->orderBy('total_like_count','desc')
+                    ->get();
+
+                $i        = 1;
+                $position = 0;
+
+                foreach ($users_position as $usr) {
+
+                    if($usr->vk_id == $vk_id) {
+                        $position = $i;
+                    }
+                    $i++;
+
+                }
+                $users['position'] = $position;
                 return $this->customResponse($users);
         }
     }
