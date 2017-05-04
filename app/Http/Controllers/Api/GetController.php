@@ -140,12 +140,6 @@ class GetController extends Controller
         $offset = isset($request->offset) ? (int)$request->offset : 0;
         $limit = isset($request->limit) ? (int)$request->limit : 100000;
 
-        $users_all= DB::table('fb_users')
-            ->offset(0)
-            ->limit(100000)
-            ->orderBy('total_like_count','desc')
-            ->get();
-
         if(!isset($request->token)||$request->token=='') {
             $users = DB::table('fb_users')
                 ->offset($offset)
@@ -168,6 +162,12 @@ class GetController extends Controller
                 $users = DB::table('fb_users')
                     ->offset($offset)
                     ->limit($limit)
+                    ->orderBy('total_like_count','desc')
+                    ->get();
+
+                $users_all= DB::table('fb_users')
+                    ->offset(0)
+                    ->limit(100000)
                     ->orderBy('total_like_count','desc')
                     ->get();
 
@@ -203,6 +203,13 @@ class GetController extends Controller
                     ->where('city_id', $user['location']['id'])
                     ->offset($offset)
                     ->limit($limit)
+                    ->orderBy('total_like_count','desc')
+                    ->get();
+
+                $users_all = DB::table('fb_users')
+                    ->where('city_id', $user['location']['id'])
+                    ->offset(0)
+                    ->limit(100000)
                     ->orderBy('total_like_count','desc')
                     ->get();
 
@@ -246,6 +253,12 @@ class GetController extends Controller
                     ->orderBy('total_like_count','desc')
                     ->get();
 
+                $users_all = DB::table('fb_users')
+                    ->whereIn('facebook_id', $friends)
+                    ->offset(0)
+                    ->limit(100000)
+                    ->orderBy('total_like_count','desc')
+                    ->get();
                 $i        = 1;
                 $position = 0;
 
