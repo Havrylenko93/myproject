@@ -140,6 +140,12 @@ class GetController extends Controller
         $offset = isset($request->offset) ? (int)$request->offset : 0;
         $limit = isset($request->limit) ? (int)$request->limit : 100000;
 
+        $users_all= DB::table('fb_users')
+            ->offset(0)
+            ->limit(100000)
+            ->orderBy('total_like_count','desc')
+            ->get();
+
         if(!isset($request->token)||$request->token=='') {
             $users = DB::table('fb_users')
                 ->offset($offset)
@@ -168,7 +174,7 @@ class GetController extends Controller
                 $i        = 1;
                 $position = 0;
 
-            foreach ($users as $usr) {
+            foreach ($users_all as $usr) {
 
                 if($usr->facebook_id == $user['id']) {
                     $position = $i;
@@ -203,7 +209,7 @@ class GetController extends Controller
                 $i        = 1;
                 $position = 0;
 
-                foreach ($users as $usr) {
+                foreach ($users_all as $usr) {
 
                     if($usr->facebook_id == $user['id']) {
                         $position = $i;
@@ -243,7 +249,7 @@ class GetController extends Controller
                 $i        = 1;
                 $position = 0;
 
-                foreach ($users as $usr) {
+                foreach ($users_all as $usr) {
 
                     if($usr->facebook_id == $user['id']) {
                         $position = $i;
