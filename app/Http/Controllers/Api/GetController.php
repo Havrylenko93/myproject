@@ -139,6 +139,15 @@ class GetController extends Controller
         $friends = array();
         $offset = isset($request->offset) ? (int)$request->offset : 0;
         $limit = isset($request->limit) ? (int)$request->limit : 100000;
+        if(!isset($request->token)) {
+            $users = DB::table('fb_users')
+                ->offset($offset)
+                ->limit($limit)
+                ->orderBy('total_like_count','desc')
+                ->get();
+
+            return $this->customResponse($users);
+        }
         switch ($flag){
             case 'all':
                 $user = $this->getUserObj($request);
@@ -222,6 +231,7 @@ class GetController extends Controller
                     $friends[] = $friend['id'];
                 }
                 $friends[] = $user['id'];
+
                 $users = DB::table('fb_users')
                     ->whereIn('facebook_id', $friends)
                     ->offset($offset)
