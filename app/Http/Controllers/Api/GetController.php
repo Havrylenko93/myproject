@@ -139,7 +139,8 @@ class GetController extends Controller
         $friends = array();
         $offset = isset($request->offset) ? (int)$request->offset : 0;
         $limit = isset($request->limit) ? (int)$request->limit : 100000;
-        if(!isset($request->token)) {
+
+        if(!isset($request->token)||$request->token=='') {
             $users = DB::table('fb_users')
                 ->offset($offset)
                 ->limit($limit)
