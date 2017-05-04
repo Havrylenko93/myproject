@@ -200,14 +200,14 @@ class GetController extends Controller
                 }
 
                 $users = DB::table('fb_users')
-                    ->where('city_id', $user['location']['id'])
+                    ->where('city_id', (int)$user['location']['id'])
                     ->offset($offset)
                     ->limit($limit)
                     ->orderBy('total_like_count','desc')
                     ->get();
 
                 $users_all = DB::table('fb_users')
-                    ->where('city_id', $user['location']['id'])
+                    ->where('city_id', (int)$user['location']['id'])
                     ->offset(0)
                     ->limit(100000)
                     ->orderBy('total_like_count','desc')
