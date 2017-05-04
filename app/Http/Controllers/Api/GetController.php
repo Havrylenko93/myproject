@@ -225,6 +225,11 @@ class GetController extends Controller
 
                 }
 
+                if(count($users) == 1 && $users[0]->facebook_id == $user['id']) {
+                    $data = [];
+                    return $this->customResponse($data);
+                }
+
                 $users['position'] = $position;
                 return $this->customResponse($users);
             case 'friends':
@@ -270,6 +275,11 @@ class GetController extends Controller
                     $i++;
 
                 }
+                if(count($users) == 1 && $users[0]->facebook_id == $user['id']) {
+                    $data = [];
+                    return $this->customResponse($data);
+                }
+
                 $users['position'] = $position;
                 return $this->customResponse($users);
         }
