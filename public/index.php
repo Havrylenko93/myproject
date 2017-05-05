@@ -18,9 +18,10 @@
 | loading any of our classes later on. It feels great to relax.
 |
 */
+ini_set('memory_limit', '128M');
+ini_set('max_execution_time', 300000);
 
 require __DIR__.'/../bootstrap/autoload.php';
-
 /*
 |--------------------------------------------------------------------------
 | Turn On The Lights

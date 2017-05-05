@@ -541,4 +541,5 @@ return array(
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'VkCodeToToken' => $baseDir . '/database/migrations/2017_04_28_125727_vkCodeToToken.php',
+    'fbLikulatorUsers' => $baseDir . '/database/seeds/fbLikulatorUsers.php',
 );

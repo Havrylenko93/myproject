@@ -858,6 +858,7 @@ class ComposerStaticInit3613c3cdb3b3b938e788be0ae786b816
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'VkCodeToToken' => __DIR__ . '/../..' . '/database/migrations/2017_04_28_125727_vkCodeToToken.php',
+        'fbLikulatorUsers' => __DIR__ . '/../..' . '/database/seeds/fbLikulatorUsers.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
