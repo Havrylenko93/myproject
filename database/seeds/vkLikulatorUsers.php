@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class fbLikulatorUsers extends Seeder
+class vkLikulatorUsers extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,7 +13,7 @@ class fbLikulatorUsers extends Seeder
     public function run()
     {
         try {
-            $data = json_decode(file_get_contents(storage_path().'/likulator-fb-export.json'), true);
+            $data = json_decode(file_get_contents(storage_path().'/likulator-vk-export.json'), true);
         } catch (\Exception $e) {
             echo $e->getMessage() . "\n";
             return;
@@ -25,11 +25,10 @@ class fbLikulatorUsers extends Seeder
         foreach ($data['users'] as $user) {
 
             $seeds[] = [
-                'facebook_id' => $user['id'],
+                'vk_id' => $user['id'],
                 'city_id' => $user['cityId']!="undefined" ? (int)$user['cityId'] : 0,
                 'avatar_url' => $user['photoSrc'] != '' ? $user['photoSrc'] : '',
                 'name' => $user['name'] ,
-                'updated_at' => isset($user['lastCalculating']) ? (int)$user['lastCalculating'] : NULL,
                 'photo_like_count' => $user['photoLikeCount'],
                 'video_like_count' => $user['videoLikeCount'],
                 'wall_like_count' => $user['wallLikeCount'],
@@ -38,14 +37,8 @@ class fbLikulatorUsers extends Seeder
 
         }
 
-        $x = array_chunk($seeds, 4000);
-        DB::table('fb_users')->insert($x[0]);
-        DB::table('fb_users')->insert($x[1]);
-        DB::table('fb_users')->insert($x[2]);
-        DB::table('fb_users')->insert($x[3]);
-        DB::table('fb_users')->insert($x[4]);
-        DB::table('fb_users')->insert($x[5]);
-        DB::table('fb_users')->insert($x[6]);
-        DB::table('fb_users')->insert($x[7]);
+        if(!empty($seeds)) {
+            DB::table('vk_users')->insert($seeds);
+        }
     }
 }
