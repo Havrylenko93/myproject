@@ -21,6 +21,7 @@ class VkController extends Controller
             $response_data['position'] = $data['position'];
             unset($data['position']);
         }
+
         $response_data['data']   = $data;
         $response_data['errors'] = [];
 
@@ -73,6 +74,7 @@ class VkController extends Controller
                 $users['position'] = $position;
 
                 return $this->customResponse($users);
+
             case 'city':
 
                 $users = DB::table('vk_users')
