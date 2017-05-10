@@ -26,6 +26,10 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
             Route::any('/deleteUser', ['as' => 'deleteUser', 'uses' => 'VkController@deleteUser']);
             Route::any('getUsers/{flag}', ['as'=>'getUsers', 'uses'=>'VkController@GetUsers']);
         });
+        Route::group(['prefix' => 'instagram', 'as' => 'vk.'], function () {
+            Route::any('/getLikes', ['as' => 'updateOrCreateUser', 'uses' => 'VkController@updateOrCreateUser']);
+            Route::any('/redirect', ['as' => 'updateOrCreateUser', 'uses' => 'VkController@updateOrCreateUser']);
+        });
     });
     Route::any('test', ['as'=>'test', 'uses'=>'test@myrun']);
 });
