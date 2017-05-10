@@ -27,8 +27,8 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
             Route::any('getUsers/{flag}', ['as'=>'getUsers', 'uses'=>'VkController@GetUsers']);
         });
         Route::group(['prefix' => 'instagram', 'as' => 'vk.'], function () {
-            Route::any('/getLikes', ['as' => 'updateOrCreateUser', 'uses' => 'VkController@updateOrCreateUser']);
-            Route::any('/redirect', ['as' => 'updateOrCreateUser', 'uses' => 'VkController@updateOrCreateUser']);
+            Route::any('/getLikes', ['as' => 'getLikes', 'uses' => 'InstagramController@getLikes']);
+            Route::any('/redirect', ['as' => 'redirect', 'uses' => 'InstagramController@redirect']);
         });
     });
     Route::any('test', ['as'=>'test', 'uses'=>'test@myrun']);
