@@ -47,7 +47,15 @@ class VkController extends Controller
 
         switch ($flag){
             case 'all':
+                if(!isset($request->vkId)||$request->vkId=='') {
+                    $users = DB::table('vk_users')
+                        ->offset($offset)
+                        ->limit($limit)
+                        ->orderBy('total_like_count','desc')
+                        ->get();
 
+                    return $this->customResponse($users);
+                }
                 $users = DB::table('vk_users')
                     ->offset($offset)
                     ->limit($limit)
@@ -76,8 +84,16 @@ class VkController extends Controller
                 return $this->customResponse($users);
 
             case 'city':
+                if((!isset($request->cityId)||$request->cityId=='') || (!isset($request->vkId)||$request->vkId=='')) {
+                    $users = DB::table('vk_users')
+                        ->offset($offset)
+                        ->limit($limit)
+                        ->orderBy('total_like_count','desc')
+                        ->get();
 
-                if($request->cityId=='undefined' || $request->cityId=='') {
+                    return $this->customResponse($users);
+                }
+                if($request->cityId=='undefined') {
                     $response_data['data'] = [];
                     $response_data['errors'] = ["Not found user cityId"];
                     return $response_data;
@@ -117,6 +133,15 @@ class VkController extends Controller
 
                 return $this->customResponse($users);
             case 'friends':
+                if((!isset($request->friendsIds)||$request->friendsIds=='') || (!isset($request->vkId)||$request->vkId=='')) {
+                    $users = DB::table('vk_users')
+                        ->offset($offset)
+                        ->limit($limit)
+                        ->orderBy('total_like_count','desc')
+                        ->get();
+
+                    return $this->customResponse($users);
+                }
                 $friends = explode(',',$request->friendsIds);
                 $friends[] = $request->vkId;
 
