@@ -84,19 +84,9 @@ class InstagramController extends Controller
         $ids = explode(',',$request->Ids);
         $ids[] = $request->instagramId;
 
-        $users = DB::table('instagram_users')
-            ->whereIn('instagram_id', $ids)
-            ->offset($offset)
-            ->limit($limit)
-            ->orderBy('total_like_count','desc')
-            ->get();
+        $users = $instagram_model->getUsersByIds($offset, $limit, $ids);
 
-        $users_all = DB::table('instagram_users')
-            ->whereIn('vk_id', $ids)
-            ->offset(0)
-            ->limit(100000)
-            ->orderBy('total_like_count','desc')
-            ->get();
+        $users_all = $instagram_model->getUsersByIds(0, 100000, $ids);
 
         $i        = 1;
         $position = 0;
@@ -112,11 +102,11 @@ class InstagramController extends Controller
 
         if((count($users) == 1) && ($users[0]->vk_id == $request->vkId)) {
             $data = [];
-            return $this->customResponse($data);
+            return $vk->customResponse($data);
         }
 
         $users['position'] = $position;
-        return $this->customResponse($users);
+        return $vk->customResponse($users);
     }
 
 }

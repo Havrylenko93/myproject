@@ -84,7 +84,7 @@ class VkController extends Controller
                 return $this->customResponse($users);
 
             case 'city':
-                if((!isset($request->cityId)||$request->cityId=='') || (!isset($request->vkId)||$request->vkId=='')) {
+                if((!isset($request->cityId)||$request->cityId=='') && (!isset($request->vkId)||$request->vkId=='')) {
                     $users = DB::table('vk_users')
                         ->offset($offset)
                         ->limit($limit)
@@ -93,7 +93,7 @@ class VkController extends Controller
 
                     return $this->customResponse($users);
                 }
-                if($request->cityId=='undefined') {
+                if($request->cityId=='undefined'||$request->cityId=='') {
                     $response_data['data'] = [];
                     $response_data['errors'] = ["Not found user cityId"];
                     return $response_data;
@@ -133,7 +133,7 @@ class VkController extends Controller
 
                 return $this->customResponse($users);
             case 'friends':
-                if((!isset($request->friendsIds)||$request->friendsIds=='') || (!isset($request->vkId)||$request->vkId=='')) {
+                if((!isset($request->friendsIds)||$request->friendsIds=='') && (!isset($request->vkId)||$request->vkId=='')) {
                     $users = DB::table('vk_users')
                         ->offset($offset)
                         ->limit($limit)
@@ -141,6 +141,11 @@ class VkController extends Controller
                         ->get();
 
                     return $this->customResponse($users);
+                }
+                if((!isset($request->friendsIds)||$request->friendsIds=='')) {
+                    $response_data['data'] = [];
+                    $response_data['errors'] = ["Not found user friendIds"];
+                    return $response_data;
                 }
                 $friends = explode(',',$request->friendsIds);
                 $friends[] = $request->vkId;

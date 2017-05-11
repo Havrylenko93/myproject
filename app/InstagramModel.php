@@ -19,4 +19,16 @@ class InstagramModel extends Model
             ->get();
         return $users;
     }
+
+    public function getUsersByIds($offset, $limit, $ids)
+    {
+        $users = DB::table('instagram_users')
+            ->whereIn('instagram_id', $ids)
+            ->offset($offset)
+            ->limit($limit)
+            ->orderBy('total_like_count','desc')
+            ->get();
+
+        return $users;
+    }
 }
