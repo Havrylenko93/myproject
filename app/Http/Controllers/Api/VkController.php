@@ -35,7 +35,7 @@ class VkController extends Controller
         $offset = isset($request->offset) ? (int)$request->offset : 0;
         $limit = isset($request->limit) ? (int)$request->limit : 100000;
 
-        if(!isset($request->vkId)||$request->vkId=='') {
+       /* if(!isset($request->vkId)||$request->vkId=='') {
             $users = DB::table('vk_users')
                 ->offset($offset)
                 ->limit($limit)
@@ -43,7 +43,7 @@ class VkController extends Controller
                 ->get();
 
             return $this->customResponse($users);
-        }
+        }*/
 
         switch ($flag){
             case 'all':
