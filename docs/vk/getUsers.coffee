@@ -8,7 +8,7 @@
 @apiParam {Integer} cityId cityId
 @apiParam {Integer} offset offset
 @apiParam {Integer} limit limit
-@apiParam {String} friendsId 16463873,73517365,56371537
+@apiParam {String} friendsIds 16463873,73517365,56371537
 
 @apiSuccess {Integer} id  user id in api database
 @apiSuccess {Integer} vk_id vk user id
