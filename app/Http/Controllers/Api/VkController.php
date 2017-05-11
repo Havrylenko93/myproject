@@ -77,6 +77,11 @@ class VkController extends Controller
 
             case 'city':
 
+                if($request->cityId=='undefined' || $request->cityId=='') {
+                    $response_data['data'] = [];
+                    $response_data['errors'] = ["Not found user cityId"];
+                    return $response_data;
+                }
                 $users = DB::table('vk_users')
                     ->where('city_id', $request->cityId)
                     ->offset($offset)

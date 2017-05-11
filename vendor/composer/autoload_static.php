@@ -323,6 +323,7 @@ class ComposerStaticInit3613c3cdb3b3b938e788be0ae786b816
     );
 
     public static $classMap = array (
+        'CreateInstagramUsersTable' => __DIR__ . '/../..' . '/database/migrations/2017_05_11_134706_create_instagram_users_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'CreateVkUsersTable' => __DIR__ . '/../..' . '/database/migrations/2017_04_21_161809_create_vk_users_table.php',

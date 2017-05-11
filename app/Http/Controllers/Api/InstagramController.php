@@ -5,52 +5,118 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
-use App\VkUsers;
+use App\InstagramModel;
+use App\Http\Controllers\Api\VkController;
 use DB;
 use Cache;
 
 class InstagramController extends Controller
 {
-    // https://www.instagram.com/oauth/authorize/?client_id=31818ae5ce664553a5879a086eb36b73&redirect_uri=http://likulator.loc/api/v1/instagram/redirect&response_type=code
-    // https://api.instagram.com/oauth/authorize/?client_id=31818ae5ce664553a5879a086eb36b73&redirect_uri=http://likulator.loc/api/v1/instagram/redirect&scope=likes+comments+basic+public_content+follower_list+relationships&response_type=token
-    // https://api.instagram.com/v1/users/self/media/recent/?access_token=4980024217.31818ae.96293c42964b406992de60c29594e650
-
-    public function getLikes()
+    public function getAllUsers(VkController $vk, Request $request, InstagramModel $instagram_model)
     {
-        $client = new Client();
-        try{
-            $url = "https://api.instagram.com/v1/users/self/media/recent/?access_token=4980024217.31818ae.96293c42964b406992de60c29594e650&count=1000";
-            $response = $client->get($url)->getBody();
-            $response1[] = json_decode($response, true);
-        }catch(\Exception $e){
-            return $e->getMessage();
+        $offset = isset($request->offset) ? (int)$request->offset : 0;
+        $limit = isset($request->limit) ? (int)$request->limit : 100000;
+
+        if(!isset($request->instagramId)||$request->instagramId=='') {
+            $users = $instagram_model->getAllUsers($offset, $limit);
+
+            return $vk->customResponse($users);
         }
 
-        foreach ($response1[0]['data'] as $media) {
+        $users = $instagram_model->getAllUsers($offset, $limit);
 
-            if($media['type']=="video") {
-                echo "vidosik: likes = ".$media['likes']['count']." - comments count = ".$media['comments']['count']."<br/>";
+        $i        = 1;
+        $position = 0;
+
+        $users_all = $instagram_model->getAllUsers(0,100000);
+
+        foreach ($users_all as $usr) {
+
+            if($usr->instagram_id == $request->instagramId) {
+                $position = $i;
             }
+            $i++;
 
-            if($media['type']=="image") {
-                echo "image: likes = ".$media['likes']['count']." - comments count = ".$media['comments']['count']."<br/>";
-            }
         }
 
-        try{
-            $url1 = "https://api.instagram.com/v1/users/self/followed-by.json?access_token=4980024217.31818ae.96293c42964b406992de60c29594e650";
-            $follow = $client->get($url1)->getBody();
-            $follow1[] = json_decode($follow, true);
-        }catch(\Exception $e){
-            return $e->getMessage();
-        }
+        $users['position'] = $position;
 
-        dd($follow1);
-
+        return $vk->customResponse($users);
     }
 
-    public function redirect(Request $request)
+    public function updateOrCreateUser(Request $request)
     {
-        dd($request);
+        if(!isset($request->instagramId)) {
+            $data['data'] =[];
+            $data['error'] = ['msg'=>'instagramId not found'];
+            return response()->json($data);
+        }
+
+        $instagram_id     = (int)$request->instagramId;
+        $avatar_url       = isset($request->avatarUrl) ? $request->avatarUrl : ' ';
+        $name             = isset($request->name) ? $request->name : ' ';
+        $photo_like_count = isset($request->photoLikes) ? (int)$request->photoLikes : 0;
+        $video_like_count = isset($request->videoLikes) ? (int)$request->videoLikes : 0;
+        $total_like_count = $photo_like_count+$video_like_count;
+
+        $success = InstagramModel::updateOrCreate(
+            ['instagram_id' => $instagram_id],
+            [
+                "instagram_id"       => $instagram_id,
+                "avatar_url"        => $avatar_url,
+                "name"              => $name,
+                "photo_like_count"  => $photo_like_count,
+                "video_like_count"  => $video_like_count,
+                "total_like_count"  => $total_like_count
+            ]
+        );
+
+        $data['data'] = 200;
+        $data['errors'] = [];
+        return response()->json($data);
     }
+
+    public function getUsersByIds(VkController $vk, Request $request, InstagramModel $instagram_model)
+    {
+        $offset = isset($request->offset) ? (int)$request->offset : 0;
+        $limit = isset($request->limit) ? (int)$request->limit : 100000;
+
+        $ids = explode(',',$request->Ids);
+        $ids[] = $request->instagramId;
+
+        $users = DB::table('instagram_users')
+            ->whereIn('instagram_id', $ids)
+            ->offset($offset)
+            ->limit($limit)
+            ->orderBy('total_like_count','desc')
+            ->get();
+
+        $users_all = DB::table('instagram_users')
+            ->whereIn('vk_id', $ids)
+            ->offset(0)
+            ->limit(100000)
+            ->orderBy('total_like_count','desc')
+            ->get();
+
+        $i        = 1;
+        $position = 0;
+
+        foreach ($users_all as $usr) {
+
+            if($usr->instagram_id == $request->instagramId) {
+                $position = $i;
+            }
+            $i++;
+
+        }
+
+        if((count($users) == 1) && ($users[0]->vk_id == $request->vkId)) {
+            $data = [];
+            return $this->customResponse($data);
+        }
+
+        $users['position'] = $position;
+        return $this->customResponse($users);
+    }
+
 }

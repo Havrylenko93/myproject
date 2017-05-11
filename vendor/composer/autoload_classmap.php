@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'CreateInstagramUsersTable' => $baseDir . '/database/migrations/2017_05_11_134706_create_instagram_users_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'CreateVkUsersTable' => $baseDir . '/database/migrations/2017_04_21_161809_create_vk_users_table.php',

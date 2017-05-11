@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
+
     Route::group(['prefix' => 'v1', 'as' => 'v1.'], function () {
         Route::group(['prefix' => 'facebook', 'as' => 'facebook.'], function () {
             /*Route::post('/getProfile', ['as' => 'getProfile', 'uses' => 'GetController@getProfile']);*/
@@ -27,11 +28,12 @@ Route::group(['namespace' => 'Api', 'as' => 'api.'], function () {
             Route::any('getUsers/{flag}', ['as'=>'getUsers', 'uses'=>'VkController@GetUsers']);
         });
         Route::group(['prefix' => 'instagram', 'as' => 'vk.'], function () {
-            Route::any('/getLikes', ['as' => 'getLikes', 'uses' => 'InstagramController@getLikes']);
-            Route::any('/redirect', ['as' => 'redirect', 'uses' => 'InstagramController@redirect']);
+            Route::any('/getAllUsers', ['as' => 'redirect', 'uses' => 'InstagramController@getAllUsers']);
+            Route::any('/updateOrCreateUser', ['as' => 'updateOrCreateUser', 'uses' => 'InstagramController@updateOrCreateUser']);
+            Route::any('/getUsersByIds', ['as' => 'getUsersByIds', 'uses' => 'InstagramController@getUsersByIds']);
         });
     });
-    Route::any('test', ['as'=>'test', 'uses'=>'test@myrun']);
+
 });
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
