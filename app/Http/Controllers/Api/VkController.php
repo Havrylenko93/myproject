@@ -137,7 +137,7 @@ class VkController extends Controller
                     $data['data'] =[];
                     $data['errors'] =[];
 
-                    return $this->customResponse($data);
+                    return $data;
                 }
                 if((!isset($request->friendsIds)||$request->friendsIds=='')) {
                     $response_data['data'] = [];
