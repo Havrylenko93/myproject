@@ -133,14 +133,11 @@ class VkController extends Controller
 
                 return $this->customResponse($users);
             case 'friends':
-                if((!isset($request->friendsIds)||$request->friendsIds=='') && (!isset($request->vkId)||$request->vkId=='')) {
-                    $users = DB::table('vk_users')
-                        ->offset($offset)
-                        ->limit($limit)
-                        ->orderBy('total_like_count','desc')
-                        ->get();
+                if((!isset($request->vkId)||$request->vkId=='')) {
+                    $data['data'] =[];
+                    $data['errors'] =[];
 
-                    return $this->customResponse($users);
+                    return $this->customResponse($data);
                 }
                 if((!isset($request->friendsIds)||$request->friendsIds=='')) {
                     $response_data['data'] = [];
