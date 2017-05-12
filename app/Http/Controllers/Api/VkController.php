@@ -28,8 +28,6 @@ class VkController extends Controller
         return response()->json($response_data, 200, [], JSON_UNESCAPED_UNICODE)->header('Content-Type', 'application/json; charset=utf-8');
     }
 
-
-
     public function getUsers($flag, Request $request)
     {
         $offset = isset($request->offset) ? (int)$request->offset : 0;

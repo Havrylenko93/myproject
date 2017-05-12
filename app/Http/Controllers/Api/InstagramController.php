@@ -81,7 +81,7 @@ class InstagramController extends Controller
         $offset = isset($request->offset) ? (int)$request->offset : 0;
         $limit = isset($request->limit) ? (int)$request->limit : 100000;
 
-        $ids = explode(',',$request->Ids);
+        $ids = explode(',',$request->ids);
         $ids[] = $request->instagramId;
 
         $users = $instagram_model->getUsersByIds($offset, $limit, $ids);
@@ -100,7 +100,7 @@ class InstagramController extends Controller
 
         }
 
-        if((count($users) == 1) && ($users[0]->vk_id == $request->vkId)) {
+        if((count($users) == 1) && ($users[0]->instagram_id == $request->instagramId)) {
             $data = [];
             return $vk->customResponse($data);
         }
