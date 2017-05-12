@@ -7,7 +7,7 @@
 @apiParam {Integer} instagramId instagramId
 @apiParam {Integer} offset offset
 @apiParam {Integer} limit limit
-@apiParam {String} friendsIds 16463873,73517365,56371537
+@apiParam {String} ids 16463873,73517365,56371537
 
 @apiSuccess {integer} position position current user in array
 @apiSuccess {Integer} id  user id in api database
