@@ -9,6 +9,7 @@
 @apiParam {Integer} limit limit
 @apiParam {String} ids list ids like "75896521,48759635,14785458"
 
+@apiSuccess {integer} position position current user in array
 @apiSuccess {Integer} id  user id in api database
 @apiSuccess {Integer} instagram_id instagram user id
 @apiSuccess {String}  avatar_url avatar_url
@@ -19,7 +20,6 @@
 
 @apiParamExample {json} Request-Example:
 {
-  "instagramId" : 73517365
   "offset" : "0",
   "limit" : "100"
 }

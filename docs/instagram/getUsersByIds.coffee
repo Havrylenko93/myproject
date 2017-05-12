@@ -9,6 +9,7 @@
 @apiParam {Integer} limit limit
 @apiParam {String} friendsIds 16463873,73517365,56371537
 
+@apiSuccess {integer} position position current user in array
 @apiSuccess {Integer} id  user id in api database
 @apiSuccess {Integer} instagram_id instagram user id
 @apiSuccess {String}  avatar_url avatar_url
@@ -25,6 +26,7 @@
 }
 @apiSuccessExample {json} Response-Example:
 {
+    "position": 1,
     "data": [
         {
             "id":2,
