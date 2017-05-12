@@ -1,6 +1,6 @@
 ###
 @apiVersion 1.0.0
-@api {post} instagram/getAllUsers
+@api {post} instagram/getAllUsers getAllUsers
 @apiName getUsers
 @apiDescription get all users and position current user
 @apiGroup instagram

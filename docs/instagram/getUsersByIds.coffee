@@ -1,6 +1,6 @@
 ###
 @apiVersion 1.0.0
-@api {post} instagram/getUsersByIds get users by list instagram ids
+@api {post} instagram/getUsersByIds getUsersByIds
 @apiName getUsersByIds getUsersByIds
 @apiDescription get users by ids
 @apiGroup instagram
