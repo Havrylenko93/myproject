@@ -8,7 +8,7 @@ use League\Flysystem\Exception;
 class FacebookConnect extends FacebookProvider
 {
     //protected $fields = ['name', 'email', 'gender', 'verified', 'albums{photos{likes}}', 'location', 'posts{likes}', 'videos{uploaded}'];
-    protected $fields = ['name', 'albums{photos{likes},photo_count,video_count}', 'location', 'posts{likes}', 'videos{uploaded}', 'friendlists'];
+    protected $fields = ['name', 'albums{photos{likes},photo_count,video_count}', 'location', 'posts{likes}', 'videos{uploaded}', 'friends'];
 
     public function userByToken($token)
     {
