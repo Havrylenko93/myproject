@@ -57,7 +57,7 @@ class GetController extends Controller
         unset($user['albums']);
         unset($user['posts']);
         unset($user['video']);
-        unset($user['friendlists']);
+        unset($user['friends']);
 
         $this->updateOrRegister($user);
 
@@ -233,6 +233,7 @@ class GetController extends Controller
                 $users['position'] = $position;
                 return $this->customResponse($users);
             case 'friends':
+
                 $user = $this->getUserObj($request);
 
                 if(isset($user['errors'])) {
@@ -241,12 +242,12 @@ class GetController extends Controller
                     return $data;
                 }
 
-                if(!isset($user['friendlists']['data'])) {
+                if(!isset($user['friends']['data'])) {
                     $response_data['data'] = [];
-                    $response_data['errors'] = ["Not found user friendlists"];
+                    $response_data['errors'] = ["Not found user friends"];
                     return $response_data;
                 }
-                foreach($user['friendlists']['data'] as $friend) {
+                foreach($user['friends']['data'] as $friend) {
                     $friends[] = $friend['id'];
                 }
                 $friends[] = $user['id'];
