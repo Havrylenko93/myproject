@@ -155,6 +155,7 @@ class GetController extends Controller
 
     public function getUsers($flag, Request $request)
     {
+        var_dump($flag, $request->all());die;
         $limit = (int)$request->input('limit', 100);
         $offset = (int)$request->input('offset', 0);
         $token = $request->input('token', false) ?: false;
@@ -208,7 +209,7 @@ class GetController extends Controller
                 $friends = array_column($user['friends']['data'], 'id');
                 $friends[] = $user['id'];
                 $users = $users_query
-                    ->whereIn('sort1.facebook_id', $friends)
+                    ->whereIn('sort.facebook_id', $friends)
                     ->get();
                 return [
                     'position' => $this->getUserPosition($user['id'], false, $friends),
