@@ -155,7 +155,6 @@ class GetController extends Controller
 
     public function getUsers($flag, Request $request)
     {
-        var_dump($flag, $request->all());die;
         $limit = (int)$request->input('limit', 100);
         $offset = (int)$request->input('offset', 0);
         $token = $request->input('token', false) ?: false;
