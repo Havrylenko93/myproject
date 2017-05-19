@@ -64,7 +64,7 @@ class GetController extends Controller
         if ($friends) {
             $result = $result->whereIn('facebook_id', $friends);
         }
-        return $result->first()->position;
+        return $result->first()->position+1;
     }
 
     public function getProfile(Request $request)
