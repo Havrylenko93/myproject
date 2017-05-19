@@ -57,14 +57,14 @@ class GetController extends Controller
             ->total_like_count;
         $result = DB::table('fb_users')
             ->select(DB::raw('COUNT(*) as position'))
-            ->where('total_like_count', '>', $user_likes_count);
+            ->where('total_like_count', '=>', $user_likes_count);
         if ($city_id) {
             $result = $result->where('city_id', $city_id);
         }
         if ($friends) {
             $result = $result->whereIn('facebook_id', $friends);
         }
-        return $result->first()->position+1;
+        return $result->first()->position;
     }
 
     public function getProfile(Request $request)
